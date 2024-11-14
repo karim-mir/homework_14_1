@@ -38,4 +38,4 @@ def test_category(category):
     assert category.category_count == 1
 
     # Проверка общего количества продуктов в категориях
-    assert category.quantity_products == 3
+    assert category.product_count == 3
