@@ -1,3 +1,6 @@
+from src.product import Product
+
+
 def test_category(category):
     """Тест для проверки корректности создания объекта категории.
 
@@ -9,11 +12,11 @@ def test_category(category):
     # Проверка описания категории
     assert (
         category.description
-        == "Смартфоны, как средство не только коммуникации, но и получение дополнительных функций для удобства жизни"
+        == "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни"
     )
 
     # Проверка списка продуктов в категории
-    assert category.products == [
+    expected_products = [
         {
             "name": "Samsung Galaxy C23 Ultra",
             "description": "256GB, Серый цвет, 200MP камера",
@@ -34,8 +37,18 @@ def test_category(category):
         },
     ]
 
+    # Используем category.product_list для получения списка продуктов
+    assert category.product_list == expected_products  # Сравниваем с ожидаемым списком
+
     # Проверка общего количества категорий
     assert category.category_count == 1
 
     # Проверка общего количества продуктов в категориях
     assert category.product_count == 3
+
+    # Создание нового продукта и добавление его в категорию
+    new_product = Product("Google Pixel 6", "128GB, Черный", 59999.0, 10)
+    category.add_product(new_product)
+
+    # Проверяем, что новый продукт добавлен
+    assert category.product_count == 4  # Обновляемое количество продуктов

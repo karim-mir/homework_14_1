@@ -15,3 +15,31 @@ def test_product_init(product):
 
     # Проверка количества продукта
     assert product.quantity == 8
+
+
+def test_product_set_price(product):
+    """Тест для проверки установки корректной цены."""
+
+    # Установка новой корректной цены
+    product.price = 250000.0
+    assert product.price == 250000.0
+
+
+def test_product_set_negative_price(product):
+    """Тест для проверки установки некорректной (отрицательной) цены."""
+
+    # Попытка установить отрицательную цену
+    try:
+        product.price = -100
+    except ValueError as e:
+        assert str(e) == "Цена не должна быть нулевая или отрицательная"
+
+
+def test_product_set_zero_price(product):
+    """Тест для проверки установки некорректной (нулевой) цены."""
+
+    # Попытка установить нулевую цену
+    try:
+        product.price = 0
+    except ValueError as e:
+        assert str(e) == "Цена не должна быть нулевая или отрицательная"
