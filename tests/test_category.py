@@ -38,7 +38,7 @@ def test_category(category):
     ]
 
     # Используем category.product_list для получения списка продуктов
-    assert category.product_list == expected_products  # Сравниваем с ожидаемым списком
+    assert category.products == expected_products  # Сравниваем с ожидаемым списком
 
     # Проверка общего количества категорий
     assert category.category_count == 1

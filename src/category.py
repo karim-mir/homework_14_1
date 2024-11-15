@@ -26,7 +26,7 @@ class Category:
             raise ValueError("Переданный объект не является продуктом.")
 
     @property
-    def product_list(self) -> list:
+    def products(self) -> list:
         """Геттер для возврата списка продуктов в формате списка словарей."""
         return [
             {
@@ -52,11 +52,11 @@ if __name__ == "__main__":
         [product1, product2, product3],
     )
 
-    print(category1.product_list)  # Это теперь будет список словарей.
+    print(category1.products)  # Это теперь словарей.
 
     product4 = Product('55" QLED 4K', "Фоновая подсветка", 123000.0, 7)
     category1.add_product(product4)
 
-    print(category1.product_list)  # Это теперь будет список словарей.
+    print(category1.products)  # Это теперь список словарей.
 
     print(f"Общее количество продуктов в категории: {Category.product_count}")

@@ -11,9 +11,14 @@ class Product:
         self.quantity = quantity
 
     @classmethod
-    def new_product(cls, name, description, price, quantity):
-        """Создает новый продукт и возвращает его экземпляр."""
-        return cls(name, description, price, quantity)
+    def new_product(cls, product_data):
+        """Создает новый продукт из словаря и возвращает его экземпляр."""
+        return cls(
+            name=product_data["name"],
+            description=product_data["description"],
+            price=product_data["price"],
+            quantity=product_data["quantity"],
+        )
 
     @property
     def price(self):
@@ -24,7 +29,7 @@ class Product:
     def price(self, value):
         """Сеттер для установки цены с проверкой на положительность."""
         if value <= 0:
-            print("Цена не должна быть нулевая или отрицательная")
+            print("Цена не должна быть нулевой или отрицательной")
         else:
             self.__price = (
                 value  # Устанавливаем новое значение цены, если оно корректно
@@ -32,7 +37,15 @@ class Product:
 
 
 if __name__ == "__main__":
-    product = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
+    # Пример использования класса-метода new_product
+    product_data = {
+        "name": "Iphone 15",
+        "description": "512GB, Gray space",
+        "price": 210000.0,
+        "quantity": 8,
+    }
+
+    product = Product.new_product(product_data)
 
     print(product.name)
     print(product.description)
