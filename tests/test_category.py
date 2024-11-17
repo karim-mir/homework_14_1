@@ -16,26 +16,11 @@ def test_category(category):
     )
 
     # Проверка списка продуктов в категории
-    expected_products = [
-        {
-            "name": "Samsung Galaxy C23 Ultra",
-            "description": "256GB, Серый цвет, 200MP камера",
-            "price": 180000.0,
-            "quantity": 5,
-        },
-        {
-            "name": "Iphone 15",
-            "description": "512GB, Gray space",
-            "price": 210000.0,
-            "quantity": 8,
-        },
-        {
-            "name": "Xiaomi Redmi Note 11",
-            "description": "1024GB, Синий",
-            "price": 31000.0,
-            "quantity": 14,
-        },
-    ]
+    expected_products = ('Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт.\n'
+                         'Iphone 15, 210000.0 руб. Остаток: 8 шт.\n'
+                         'Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт.')
+
+
 
     # Используем category.product_list для получения списка продуктов
     assert category.products == expected_products  # Сравниваем с ожидаемым списком

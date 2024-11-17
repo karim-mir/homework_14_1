@@ -4,7 +4,6 @@ import os
 from src.category import Category
 from src.product import Product
 
-
 def read_json(path: str) -> dict:
     """
     Читает JSON файл и возвращает его содержимое в виде словаря.
@@ -20,7 +19,6 @@ def read_json(path: str) -> dict:
         data = json.load(file)
 
     return data
-
 
 def create_objects_from_json(data: list) -> list:
     """
@@ -38,16 +36,14 @@ def create_objects_from_json(data: list) -> list:
         )
 
         # Создаем список продуктов для текущей категории
-        products = [
-            Product(**product_data) for product_data in category_data["products"]
-        ]
-        category.products = products  # Сохраняем продукты в категории
+        for product_data in category_data["products"]:
+            product = Product(**product_data)  # Создаем объект продукта
+            category.add_product(product)  # Добавляем продукт в категорию
 
         # Добавляем категорию в список
         categories.append(category)
 
     return categories
-
 
 if __name__ == "__main__":
     # Читаем сырые данные из JSON файла
@@ -58,7 +54,4 @@ if __name__ == "__main__":
 
     # Пример вывода информации о первой категории и её продуктах
     print(categories_data[0].name)  # Имя первой категории
-    for product in categories_data[0].products:  # Продукты первой категории
-        print(
-            f"  Продукт: {product.name}, Цена: {product.price}, Количество: {product.quantity}"
-        )
+    print(categories_data[0].products)

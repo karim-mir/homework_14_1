@@ -1,3 +1,5 @@
+from itertools import product
+
 from src.product import Product
 
 
@@ -26,17 +28,10 @@ class Category:
             raise ValueError("Переданный объект не является продуктом.")
 
     @property
-    def products(self) -> list:
-        """Геттер для возврата списка продуктов в формате списка словарей."""
-        return [
-            {
-                "name": product.name,
-                "description": product.description,
-                "price": product.price,
-                "quantity": product.quantity,
-            }
-            for product in self.__products
-        ]
+    def products(self) -> str:
+        """Геттер для возврата списка продуктов в формате строки."""
+        for product in self.__products:
+            return "\n".join([f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт." for product in self.__products])
 
 
 if __name__ == "__main__":
@@ -52,11 +47,11 @@ if __name__ == "__main__":
         [product1, product2, product3],
     )
 
-    print(category1.products)  # Это теперь словарей.
+    print(category1.products)  # Это теперь список.
 
     product4 = Product('55" QLED 4K', "Фоновая подсветка", 123000.0, 7)
     category1.add_product(product4)
 
-    print(category1.products)  # Это теперь список словарей.
+    print(category1.products)  # Это теперь список.
 
     print(f"Общее количество продуктов в категории: {Category.product_count}")
