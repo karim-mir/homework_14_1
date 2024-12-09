@@ -10,6 +10,15 @@ class Product:
         self.price = price  # Вызов сеттера для установки цены
         self.quantity = quantity
 
+    def __str__(self):
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
+
+    def __add__(self, other):
+        """Определяем, как складываются два продукта."""
+        if isinstance(other, Product):
+            return (self.price * self.quantity) + (other.price * other.quantity) # Сложение цен двух продуктов
+        raise ValueError("Можно складывать только с экземпляром Product.")
+
     @classmethod
     def new_product(cls, product_data):
         """Создает новый продукт из словаря и возвращает его экземпляр."""
