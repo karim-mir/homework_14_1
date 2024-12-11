@@ -16,7 +16,9 @@ class Product:
     def __add__(self, other):
         """Определяем, как складываются два продукта."""
         if isinstance(other, Product):
-            return (self.price * self.quantity) + (other.price * other.quantity) # Сложение цен двух продуктов
+            return (self.price * self.quantity) + (
+                other.price * other.quantity
+            )  # Сложение цен двух продуктов
         raise ValueError("Можно складывать только с экземпляром Product.")
 
     @classmethod

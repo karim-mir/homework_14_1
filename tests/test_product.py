@@ -1,13 +1,17 @@
 import unittest
-from src.product import Product
 from unittest.mock import patch
+
+from src.product import Product
+
 
 class TestProduct(unittest.TestCase):
 
     def setUp(self):
         """Создание тестовых данных для каждого теста."""
         self.product1 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
-        self.product2 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет", 180000.0, 5)
+        self.product2 = Product(
+            "Samsung Galaxy S23 Ultra", "256GB, Серый цвет", 180000.0, 5
+        )
 
     def test_initialization(self):
         """Тест на правильность инициализации продукта."""
@@ -21,19 +25,21 @@ class TestProduct(unittest.TestCase):
         self.product1.price = 250000.0
         self.assertEqual(self.product1.price, 250000.0)
 
-    @patch('builtins.print')
+    @patch("builtins.print")
     def test_set_price_invalid(self, mock_print):
         """Тест на установку некорректной (отрицательной) цены."""
         self.product1.price = -100.0  # Это должно вывести сообщение об ошибке
         mock_print.assert_called_with("Цена не должна быть нулевой или отрицательной")
         self.assertEqual(self.product1.price, 210000.0)  # Проверяем, цена не изменилась
 
-    @patch('builtins.print')
+    @patch("builtins.print")
     def test_set_price_zero(self, mock_print):
         """Тестируем, что нельзя установить нулевую цену."""
         self.product1.price = 0
         mock_print.assert_called_with("Цена не должна быть нулевой или отрицательной")
-        self.assertEqual(self.product1.price, 210000.0)  # предыдущая цена должна остаться
+        self.assertEqual(
+            self.product1.price, 210000.0
+        )  # предыдущая цена должна остаться
 
     def test_addition_of_products(self):
         """Тест сложения двух продуктов (только цены)."""
@@ -57,6 +63,7 @@ class TestProduct(unittest.TestCase):
         self.assertEqual(product3.name, "Xiaomi Redmi Note 11")
         self.assertEqual(product3.price, 31000.0)
         self.assertEqual(product3.quantity, 14)
+
 
 if __name__ == "__main__":
     unittest.main()

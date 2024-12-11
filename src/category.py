@@ -1,4 +1,5 @@
-from itertools import product
+import json
+import os
 
 from src.product import Product
 
@@ -13,12 +14,40 @@ class Category:
     def __init__(self, name, description, products=None):
         self.name = name
         self.description = description
-        self.__products = products if products else []
+        self.__products = products if products is not None else []
+        if not self.__products:  # Вызывается только, если __products пуст
+            self.load_products()
         Category.category_count += 1
-        Category.product_count += len(self.__products)
+
+    def load_products(self):
+        """Загружает продукты из data.json и добавляет их в категорию."""
+        try:
+            with open(
+                os.path.join("..", "data", "data.json"), "r", encoding="utf-8"
+            ) as f:
+                categories_data = json.load(f)
+                for category in categories_data:
+                    if category["name"] == self.name:
+                        for product_data in category["products"]:
+                            product = Product(
+                                product_data["name"],
+                                product_data["description"],
+                                product_data["price"],
+                                product_data["quantity"],
+                            )
+                            self.__products.append(product)
+                        break  # Прекращаем, если нашли нужную категорию
+        except FileNotFoundError:
+            print("Файл data.json не найден.")
+        except json.JSONDecodeError:
+            print("Ошибка чтения файла data.json.")
 
     def __str__(self):
-        return f"{self.name}, количество продуктов: {len(self.__products)} шт."
+        """Выводит название категории и общее количество всех товаров."""
+        total_quantity = sum(
+            product.quantity for product in self.__products
+        )  # Суммируем количество всех товаров
+        return f"{self.name}, количество продуктов: {total_quantity} шт."
 
     def add_product(self, product: Product):
         """Добавляет продукт в категорию."""
@@ -30,41 +59,17 @@ class Category:
         else:
             raise ValueError("Переданный объект не является продуктом.")
 
-    def total_value(self) -> float:
-        """Вычисляет общую стоимость всех товаров в категории."""
-        total = 0.0
-        for product in self.__products:
-            total += product.price * product.quantity
-        return total
-
     @property
-    def products(self) -> str:
+    def products(self):
         """Геттер для возврата списка продуктов в формате строки."""
-        product_str = ""
-        for product in self.__products:
-            product_str += f"{str(product)}\n"
-        return product_str
+        return "\n".join(str(product) for product in self.__products)
 
 
-if __name__ == '__main__':
-    product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
-    product2 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
-    product3 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14)
-
-    print(str(product1))
-    print(str(product2))
-    print(str(product3))
-
+if __name__ == "__main__":
     category1 = Category(
         "Смартфоны",
         "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни",
-        [product1, product2, product3]
     )
 
-    print(str(category1))
-
-    print(category1.products)
-
-    print(product1 + product2)
-    print(product1 + product3)
-    print(product2 + product3)
+    print(str(category1))  # Вывод названия категории и количества продуктов
+    print(category1.products)  # Вывод всех продуктов категории

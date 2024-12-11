@@ -4,6 +4,7 @@ import os
 from src.category import Category
 from src.product import Product
 
+
 def read_json(path: str) -> dict:
     """
     Читает JSON файл и возвращает его содержимое в виде словаря.
@@ -19,6 +20,7 @@ def read_json(path: str) -> dict:
         data = json.load(file)
 
     return data
+
 
 def create_objects_from_json(data: list) -> list:
     """
@@ -44,6 +46,7 @@ def create_objects_from_json(data: list) -> list:
         categories.append(category)
 
     return categories
+
 
 if __name__ == "__main__":
     # Читаем сырые данные из JSON файла
