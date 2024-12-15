@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 
-from src.product import Product
+from src.product import Product, Smartphone, LawnGrass
 
 
 class TestProduct(unittest.TestCase):
@@ -63,6 +63,59 @@ class TestProduct(unittest.TestCase):
         self.assertEqual(product3.name, "Xiaomi Redmi Note 11")
         self.assertEqual(product3.price, 31000.0)
         self.assertEqual(product3.quantity, 14)
+
+class TestSmartphone(unittest.TestCase):
+    def setUp(self):
+        """Создание тестовых данных для каждого теста."""
+        self.smartphone1 = Smartphone(
+            "Iphone 15", "512GB, Gray space", 210000.0, 8, 15, "iPhone 15", 512, "Gray"
+        )
+        self.smartphone2 = Smartphone(
+            "Samsung Galaxy S23 Ultra", "256GB, Серый цвет", 180000.0, 5, 14, "Galaxy S23", 256, "Gray"
+        )
+
+    def test_smartphone_initialization(self):
+        """Тест на правильность инициализации смартфона."""
+        self.assertEqual(self.smartphone1.name, "Iphone 15")
+        self.assertEqual(self.smartphone1.price, 210000.0)
+        self.assertEqual(self.smartphone1.memory, 512)
+
+    def test_smartphone_addition(self):
+        """Тест сложения двух смартфонов."""
+        total_price = self.smartphone1 + self.smartphone2
+        self.assertEqual(total_price, 210000.0 + 180000.0)
+
+    def test_smartphone_addition_invalid_type(self):
+        """Проверка добавления смартфона к объекту другого типа (должно вызвать исключение)."""
+        with self.assertRaises(TypeError):
+            result = self.smartphone1 + "Не смартфон"  # Это не допустимый объект
+
+
+class TestLawnGrass(unittest.TestCase):
+    def setUp(self):
+        """Создание тестовых данных для каждого теста."""
+        self.lawn_grass1 = LawnGrass(
+            "Курганник", "Служит для газонов", 2500.0, 20, "Россия", 30, "Зеленый"
+        )
+        self.lawn_grass2 = LawnGrass(
+            "Райграс", "Лучший газонный", 3000.0, 15, "Канада", 25, "Темно-зеленый"
+        )
+
+    def test_lawn_grass_initialization(self):
+        """Тест на правильность инициализации газона."""
+        self.assertEqual(self.lawn_grass1.name, "Курганник")
+        self.assertEqual(self.lawn_grass1.price, 2500.0)
+        self.assertEqual(self.lawn_grass1.country, "Россия")
+
+    def test_lawn_grass_addition(self):
+        """Тест сложения двух видов газонов."""
+        total_price = self.lawn_grass1 + self.lawn_grass2
+        self.assertEqual(total_price, 2500.0 + 3000.0)
+
+    def test_lawn_grass_addition_invalid_type(self):
+        """Проверка добавления газона к объекту другого типа (должно вызвать исключение)."""
+        with self.assertRaises(TypeError):
+            result = self.lawn_grass1 + "Не газон"  # Это не допустимый объект
 
 
 if __name__ == "__main__":
