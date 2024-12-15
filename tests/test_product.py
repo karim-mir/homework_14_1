@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 
-from src.product import Product, Smartphone, LawnGrass
+from src.product import LawnGrass, Product, Smartphone
 
 
 class TestProduct(unittest.TestCase):
@@ -49,7 +49,7 @@ class TestProduct(unittest.TestCase):
     def test_addition_invalid_type(self):
         """Проверка добавления продукта к объекту другого типа (должно вызвать исключение)."""
         with self.assertRaises(ValueError):
-            result = self.product1 + "Не продукт"  # Это не допустимый объект
+            self.product1 + "Не продукт"  # Это не допустимый объект
 
     def test_new_product_class_method(self):
         """Тест на создание нового продукта через класс-метод."""
@@ -64,6 +64,7 @@ class TestProduct(unittest.TestCase):
         self.assertEqual(product3.price, 31000.0)
         self.assertEqual(product3.quantity, 14)
 
+
 class TestSmartphone(unittest.TestCase):
     def setUp(self):
         """Создание тестовых данных для каждого теста."""
@@ -71,7 +72,14 @@ class TestSmartphone(unittest.TestCase):
             "Iphone 15", "512GB, Gray space", 210000.0, 8, 15, "iPhone 15", 512, "Gray"
         )
         self.smartphone2 = Smartphone(
-            "Samsung Galaxy S23 Ultra", "256GB, Серый цвет", 180000.0, 5, 14, "Galaxy S23", 256, "Gray"
+            "Samsung Galaxy S23 Ultra",
+            "256GB, Серый цвет",
+            180000.0,
+            5,
+            14,
+            "Galaxy S23",
+            256,
+            "Gray",
         )
 
     def test_smartphone_initialization(self):
@@ -88,7 +96,7 @@ class TestSmartphone(unittest.TestCase):
     def test_smartphone_addition_invalid_type(self):
         """Проверка добавления смартфона к объекту другого типа (должно вызвать исключение)."""
         with self.assertRaises(TypeError):
-            result = self.smartphone1 + "Не смартфон"  # Это не допустимый объект
+            self.smartphone1 + "Не смартфон"  # Это не допустимый объект
 
 
 class TestLawnGrass(unittest.TestCase):
@@ -115,7 +123,7 @@ class TestLawnGrass(unittest.TestCase):
     def test_lawn_grass_addition_invalid_type(self):
         """Проверка добавления газона к объекту другого типа (должно вызвать исключение)."""
         with self.assertRaises(TypeError):
-            result = self.lawn_grass1 + "Не газон"  # Это не допустимый объект
+            self.lawn_grass1 + "Не газон"  # Это не допустимый объект
 
 
 if __name__ == "__main__":

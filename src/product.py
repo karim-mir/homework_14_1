@@ -16,9 +16,10 @@ class Product:
     def __add__(self, other):
         """Определяем, как складываются два продукта."""
         if isinstance(other, Product):
-            return (self.price * self.quantity) + (other.price * other.quantity)  # Сложение цен двух продуктов
+            return (self.price * self.quantity) + (
+                other.price * other.quantity
+            )  # Сложение цен двух продуктов
         raise ValueError("Можно складывать только с экземпляром Product.")
-
 
     @classmethod
     def new_product(cls, product_data):
@@ -64,12 +65,12 @@ class Smartphone(Product):
 
 class LawnGrass(Product):
     def __init__(
-        self, name, description, price, quantity, country, germination_period, color):
+        self, name, description, price, quantity, country, germination_period, color
+    ):
         super().__init__(name, description, price, quantity)
         self.country = country
         self.germination_period = germination_period
         self.color = color
-
 
     def __add__(self, other):
         if type(other) is LawnGrass:
