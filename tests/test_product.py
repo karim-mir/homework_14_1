@@ -126,5 +126,20 @@ class TestLawnGrass(unittest.TestCase):
             self.lawn_grass1 + "Не газон"  # Это не допустимый объект
 
 
+class TestPrintMixin:
+    def test_print_mixin(self, capsys):
+        # Создаем экземпляр класса Product, что должно вызвать вывод
+        Product(
+            "Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5
+        )
+
+        # Захватываем стандартный вывод
+        message = capsys.readouterr()
+
+        # Проверяем, что вывод в консоль соответствует ожидаемому
+        assert message.out.strip() == ("Product, (Samsung Galaxy S23 Ultra, 256GB, "
+                                       "Серый цвет, 200MP камера, 180000.0, 5)")
+
+
 if __name__ == "__main__":
     unittest.main()
