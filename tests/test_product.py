@@ -137,8 +137,30 @@ class TestPrintMixin:
         message = capsys.readouterr()
 
         # Проверяем, что вывод в консоль соответствует ожидаемому
-        assert message.out.strip() == ("Product, (Samsung Galaxy S23 Ultra, 256GB, "
-                                       "Серый цвет, 200MP камера, 180000.0, 5)")
+        assert message.out.strip() == (
+            "Product, (Samsung Galaxy S23 Ultra, 256GB, "
+            "Серый цвет, 200MP камера, 180000.0, 5)"
+        )
+
+
+class ProductInvalidQuantity(unittest.TestCase):
+
+    def test_invalid_quantity(self):
+        with self.assertRaises(ValueError) as context:
+            Smartphone(
+                "Iphone 15",
+                "512GB, Gray space",
+                210000.0,
+                0,
+                15,
+                "iPhone 15",
+                512,
+                "Gray",
+            )
+
+        self.assertEqual(
+            str(context.exception), "Товар с нулевым количеством не может быть добавлен"
+        )
 
 
 if __name__ == "__main__":

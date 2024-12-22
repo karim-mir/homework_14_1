@@ -1,5 +1,6 @@
 import pytest
 
+from src.category import Category
 from src.product import Product
 
 
@@ -43,6 +44,37 @@ def test_products_property(category):
         "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт."
     )
     assert category.products == expected_products_str
+
+
+def test_middle_price_with_products():
+    """Проверяет среднюю цену всех продуктов в категории"""
+    category = Category("Electronics", "Various electronic devices")
+
+    # Добавляем продукты в категорию
+    product1 = Product("Smartphone", "Latest model", 1000.0, 2)  # 2000.0
+    product2 = Product("Laptop", "Gaming laptop", 2000.0, 3)  # 6000.0
+    category.add_product(product1)
+    category.add_product(product2)
+
+    # Ожидаемая средняя цена
+    expected_middle_price = round((1000.0 * 2 + 2000.0 * 3) / (2 + 3), 2)
+
+    # Получаем среднюю цену
+    round_middle_price = category.middle_price()
+
+    # Проверяем, что средняя цена соответствует ожидаемой
+    assert round_middle_price == expected_middle_price
+
+
+def test_invalid_middle_price_empty_category():
+    """Проверяет работу функции при пустом списке продуктов в категории"""
+    category = Category("Empty Category", "No products here")
+
+    # Получаем среднюю цену
+    round_middle_price = category.middle_price()
+
+    # Проверяем, что средняя цена равна 0
+    assert round_middle_price == 0
 
 
 if __name__ == "__main__":

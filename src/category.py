@@ -64,6 +64,19 @@ class Category:
         """Геттер для возврата списка продуктов в формате строки."""
         return "\n".join(str(product) for product in self.__products)
 
+    def middle_price(self):
+        """Возвращает среднюю цену всех продуктов в категории."""
+        total_quantity = sum(product.quantity for product in self.__products)
+
+        try:
+            total_price = sum(
+                product.price * product.quantity for product in self.__products
+            )
+            round_middle_price = round(total_price / total_quantity, 2)
+            return round_middle_price
+        except ZeroDivisionError:
+            return 0
+
 
 if __name__ == "__main__":
     category1 = Category(
@@ -229,3 +242,24 @@ if __name__ == "__main__":
 
     print(Category.category_count)
     print(Category.product_count)
+
+    try:
+        product_invalid = Product("Бракованный товар", "Неверное количество", 1000.0, 0)
+    except ValueError:
+        print(
+            "Возникла ошибка ValueError прерывающая работу программы при попытке добавить продукт "
+            "с нулевым количеством"
+        )
+    else:
+        print(
+            "Не возникла ошибка ValueError при попытке добавить продукт с нулевым количеством"
+        )
+
+    category1 = Category(
+        "Смартфоны", "Категория смартфонов", [product1, product2, product3]
+    )
+
+    print(category1.middle_price())
+
+    category_empty = Category("Пустая категория", "Категория без продуктов", [])
+    print(category_empty.middle_price())
